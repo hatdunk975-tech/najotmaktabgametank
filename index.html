@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Najot Maktab - Tanks Battle</title>
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body class="bg-neutral-950 text-white font-sans overflow-hidden">
+    <div id="app" class="min-h-screen flex flex-col items-center justify-center p-4">
+      <!-- Menu Screen -->
+      <div id="menu-screen" class="text-center max-w-2xl">
+        <h1 class="text-7xl font-black tracking-tighter uppercase italic mb-2">
+          Najot <span class="text-emerald-500">Maktab</span>
+        </h1>
+        <p class="text-neutral-500 tracking-[0.3em] uppercase text-sm mb-12">Tank Battle Simulator</p>
+        
+        <div class="flex items-center justify-center gap-4 mb-8">
+          <button id="coop-toggle" class="flex items-center gap-3 px-6 py-3 rounded-2xl border-2 bg-neutral-900 border-neutral-800 text-neutral-500 transition-all font-bold uppercase">
+            Sherik bilan (2 Player)
+          </button>
+        </div>
+
+        <div id="mode-grid" class="grid grid-cols-3 gap-4 mb-12">
+          <!-- Modes will be injected here -->
+        </div>
+
+        <button id="start-btn" class="group relative px-12 py-6 bg-white text-black rounded-full font-black uppercase italic text-2xl hover:scale-110 transition-transform flex items-center gap-4 mx-auto">
+          Start Battle
+        </button>
+      </div>
+
+      <!-- Game Screen -->
+      <div id="game-screen" class="hidden relative">
+        <div class="flex justify-between items-center mb-4 px-4 w-full">
+          <div class="flex items-center gap-4">
+            <div class="bg-red-500/20 border border-red-500/30 px-4 py-2 rounded-xl">
+              <span class="text-xs font-bold uppercase text-red-400 block">Red Team</span>
+              <span id="score-red" class="text-2xl font-black italic">0</span>
+            </div>
+            <button id="leave-btn" class="p-3 bg-neutral-800 hover:bg-red-500 rounded-xl transition-colors group">
+              Leave
+            </button>
+          </div>
+          <div class="text-center">
+            <div class="text-[10px] text-neutral-500 uppercase tracking-widest font-bold">Mode</div>
+            <div id="current-mode" class="text-xl font-black italic text-emerald-500">1vs1</div>
+          </div>
+          <div class="bg-blue-500/20 border border-blue-500/30 px-4 py-2 rounded-xl text-right">
+            <span class="text-xs font-bold uppercase text-blue-400 block">Blue Team</span>
+            <span id="score-blue" class="text-2xl font-black italic">0</span>
+          </div>
+        </div>
+
+        <canvas id="game-canvas" width="800" height="600" class="rounded-3xl border-4 border-neutral-800 shadow-2xl bg-neutral-900"></canvas>
+
+        <!-- HUDs -->
+        <div id="hud-red" class="absolute top-24 left-4 flex flex-col gap-2"></div>
+        <div id="hud-blue" class="absolute top-24 right-4 flex flex-col items-end gap-2"></div>
+      </div>
+
+      <!-- Shop Overlay -->
+      <div id="shop-overlay" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="bg-neutral-900 p-8 rounded-3xl border-2 border-emerald-500 w-96">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-black uppercase italic">Weapon Shop</h2>
+            <button id="close-shop" class="text-neutral-500">Close</button>
+          </div>
+          <div id="shop-items" class="grid gap-3"></div>
+        </div>
+      </div>
+
+      <!-- Game Over Overlay -->
+      <div id="game-over-overlay" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md">
+        <div class="text-center">
+          <h2 id="winner-text" class="text-7xl font-black uppercase italic mb-4">Red Victory!</h2>
+          <div class="flex gap-4 justify-center">
+            <button id="rematch-btn" class="px-8 py-4 bg-white text-black rounded-full font-black uppercase italic hover:scale-105 transition-transform">Rematch</button>
+            <button id="menu-btn" class="px-8 py-4 bg-neutral-800 text-white rounded-full font-black uppercase italic hover:scale-105 transition-transform">Menu</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer-controls" class="mt-8 flex gap-12 text-neutral-600 text-[10px] font-bold uppercase tracking-[0.2em]">
+        <div class="text-center">
+          <p class="text-red-500 mb-1">Player 1 (Red)</p>
+          WASD to Move • Space to Fire
+        </div>
+        <div id="p2-controls" class="text-center hidden">
+          <p class="text-blue-500 mb-1">Player 2 (Blue)</p>
+          Arrows to Move • Enter to Fire
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+
