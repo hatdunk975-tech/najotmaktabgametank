@@ -7,8 +7,59 @@
 
 body {
   font-family: var(--font-sans);
+  touch-action: manipulation;
+  -webkit-overflow-scrolling: touch;
+}
+
+#app {
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 1024px) {
+  #game-canvas {
+    border-width: 2px;
+    border-radius: 1rem;
+  }
+  
+  #hud-red, #hud-blue {
+    top: 1rem !important;
+    scale: 0.8;
+    transform-origin: top;
+  }
+  
+  #hud-red { left: 0.5rem !important; }
+  #hud-blue { right: 0.5rem !important; }
+  
+  #live-timer {
+    top: 0.5rem !important;
+    scale: 0.8;
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.3);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.5);
 }
 
 .hidden {
   display: none !important;
+}
+
+/* Prevent text selection on mobile buttons */
+button {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }

@@ -24,6 +24,8 @@ enum UpgradeType {
   SHIELD = 'SHIELD',
   SPEED = 'SPEED',
   DAMAGE = 'DAMAGE',
+  ARMOR = 'ARMOR',
+  FIRE_RATE = 'FIRE_RATE',
 }
 
 interface Weapon {
@@ -45,10 +47,10 @@ interface Upgrade {
 }
 
 const WEAPONS: Record<WeaponType, Weapon> = {
-  [WeaponType.KNIFE]: { type: WeaponType.KNIFE, name: 'Pichoq', price: 50, damage: 30, speed: 12, cooldown: 40, icon: '⚔️' },
-  [WeaponType.GRENADE]: { type: WeaponType.GRENADE, name: 'Granata', price: 150, damage: 60, speed: 6, cooldown: 80, icon: '💣' },
-  [WeaponType.KALASH]: { type: WeaponType.KALASH, name: 'Kalash', price: 300, damage: 15, speed: 15, cooldown: 20, icon: '⚡' },
-  [WeaponType.SNIPER]: { type: WeaponType.SNIPER, name: 'Sniper', price: 500, damage: 90, speed: 22, cooldown: 120, icon: '🎯' },
+  [WeaponType.KNIFE]: { type: WeaponType.KNIFE, name: 'Pichoq', price: 50, damage: 40, speed: 12, cooldown: 40, icon: '⚔️' },
+  [WeaponType.GRENADE]: { type: WeaponType.GRENADE, name: 'Bomba', price: 150, damage: 70, speed: 6, cooldown: 80, icon: '💣' },
+  [WeaponType.KALASH]: { type: WeaponType.KALASH, name: 'AK-47', price: 300, damage: 15, speed: 15, cooldown: 20, icon: '⚡' },
+  [WeaponType.SNIPER]: { type: WeaponType.SNIPER, name: 'Sniper', price: 500, damage: 100, speed: 22, cooldown: 120, icon: '🎯' },
 };
 
 const UPGRADES: Record<UpgradeType, Upgrade> = {
@@ -56,6 +58,8 @@ const UPGRADES: Record<UpgradeType, Upgrade> = {
   [UpgradeType.SHIELD]: { type: UpgradeType.SHIELD, name: 'Qalqon', price: 150, icon: '🛡️', desc: '100% Qalqon beradi' },
   [UpgradeType.SPEED]: { type: UpgradeType.SPEED, name: 'Tezlik+', price: 200, icon: '🏃', desc: 'Tezlikni 10% oshiradi' },
   [UpgradeType.DAMAGE]: { type: UpgradeType.DAMAGE, name: 'Zarar+', price: 300, icon: '🔥', desc: 'Zararni 10% oshiradi' },
+  [UpgradeType.ARMOR]: { type: UpgradeType.ARMOR, name: 'Bronya+', price: 400, icon: '🛡️✨', desc: 'Max HP ni 20 ga oshiradi' },
+  [UpgradeType.FIRE_RATE]: { type: UpgradeType.FIRE_RATE, name: 'Tezkorlik+', price: 350, icon: '🔫', desc: 'O\'t ochish tezligini 15% oshiradi' },
 };
 
 interface Atmosphere {
@@ -66,10 +70,10 @@ interface Atmosphere {
 }
 
 const ATMOSPHERES: Atmosphere[] = [
-  { id: 'desert', name: 'Sahro', bg: 'https://picsum.photos/seed/desert-battle/800/600', color: '#f59e0b' },
-  { id: 'forest', name: 'O\'rmon', bg: 'https://picsum.photos/seed/forest-battle/800/600', color: '#10b981' },
-  { id: 'night', name: 'Tun', bg: 'https://picsum.photos/seed/night-battle/800/600', color: '#6366f1' },
-  { id: 'urban', name: 'Shahar', bg: 'https://picsum.photos/seed/city-battle/800/600', color: '#94a3b8' },
+  { id: 'neon_grid', name: 'Neon Grid', bg: 'https://picsum.photos/seed/neon-grid/800/600', color: '#06b6d4' },
+  { id: 'cyber_city', name: 'Cyber City', bg: 'https://picsum.photos/seed/cyber-city/800/600', color: '#a855f7' },
+  { id: 'plasma_storm', name: 'Plasma Storm', bg: 'https://picsum.photos/seed/plasma/800/600', color: '#ec4899' },
+  { id: 'dark_sector', name: 'Dark Sector', bg: 'https://picsum.photos/seed/dark/800/600', color: '#10b981' },
 ];
 
 interface TankModel {
@@ -84,18 +88,20 @@ interface TankModel {
 }
 
 const TANK_MODELS: TankModel[] = [
-  { id: 'balanced', name: 'Universal', hp: 100, speed: 4, damage: 1, icon: '🛡️', color: '#3b82f6', price: 0 },
-  { id: 'heavy', name: 'Og\'ir', hp: 180, speed: 2.5, damage: 1.5, icon: '🐘', color: '#475569', price: 1500 },
-  { id: 'light', name: 'Yengil', hp: 70, speed: 6, damage: 0.8, icon: '🐆', color: '#fbbf24', price: 1200 },
-  { id: 'sniper', name: 'Sniper', hp: 80, speed: 3.5, damage: 2, icon: '🎯', color: '#ef4444', price: 2000 },
-  { id: 'golden', name: 'Oltin Tank', hp: 250, speed: 5, damage: 2.5, icon: '👑', color: '#fbbf24', price: 99999 },
+  { id: 'balanced', name: 'Striker', hp: 100, speed: 3.5, damage: 1, icon: '🛡️', color: '#06b6d4', price: 0 },
+  { id: 'heavy', name: 'Titan', hp: 180, speed: 2.2, damage: 1.5, icon: '🐘', color: '#a855f7', price: 1500 },
+  { id: 'light', name: 'Ghost', hp: 70, speed: 5, damage: 0.8, icon: '🐆', color: '#10b981', price: 1200 },
+  { id: 'sniper', name: 'Sniper', hp: 80, speed: 3, damage: 2, icon: '🎯', color: '#ef4444', price: 2000 },
+  { id: 'golden', name: 'Neon King', hp: 250, speed: 4.5, damage: 2.5, icon: '👑', color: '#fbbf24', price: 99999 },
 ];
 
 // Persistent State
 let userTotalMoney = Number(localStorage.getItem('tank_total_money')) || 500;
 let ownedTankIds = JSON.parse(localStorage.getItem('tank_owned_ids') || '["balanced"]');
 let totalPlayTime = Number(localStorage.getItem('tank_play_time')) || 0; // in seconds
+let sessionTime = 0;
 let claimedRewards = JSON.parse(localStorage.getItem('tank_claimed_rewards') || '[]');
+let lastMoneyTime = Date.now();
 
 const REWARDS = [
   { id: 'reward_15', time: 15 * 60, amount: 500, label: '15 daqiqa' },
@@ -128,8 +134,11 @@ interface Tank {
   color: string;
   level: number;
   damageMult: number;
+  fireRateMult: number;
   speed: number;
   model: string;
+  treadOffset: number;
+  tripleShotTimer: number;
 }
 
 interface Bullet {
@@ -179,6 +188,9 @@ let screenShake = 0;
 let bgImg = new Image();
 
 const keys: Record<string, boolean> = {};
+const mobileKeys: Record<string, boolean> = {
+  up: false, down: false, left: false, right: false, fire: false
+};
 
 // --- DOM Elements ---
 
@@ -248,32 +260,79 @@ function init() {
   window.addEventListener('keydown', e => keys[e.code] = true);
   window.addEventListener('keyup', e => keys[e.code] = false);
 
+  // Mobile Controls
+  const setupMobileBtn = (id: string, key: string) => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.addEventListener('touchstart', (e) => { e.preventDefault(); mobileKeys[key] = true; });
+      btn.addEventListener('touchend', (e) => { e.preventDefault(); mobileKeys[key] = false; });
+      btn.addEventListener('mousedown', () => mobileKeys[key] = true);
+      btn.addEventListener('mouseup', () => mobileKeys[key] = false);
+      btn.addEventListener('mouseleave', () => mobileKeys[key] = false);
+    }
+  };
+
+  setupMobileBtn('btn-up', 'up');
+  setupMobileBtn('btn-down', 'down');
+  setupMobileBtn('btn-left', 'left');
+  setupMobileBtn('btn-right', 'right');
+  setupMobileBtn('btn-fire', 'fire');
+
+  // Resize handler
+  const resizeCanvas = () => {
+    const container = canvas.parentElement;
+    if (!container) return;
+    
+    const maxWidth = window.innerWidth - 32;
+    const maxHeight = window.innerHeight - 250; // Leave space for controls/UI
+    
+    const ratio = CANVAS_WIDTH / CANVAS_HEIGHT;
+    let newWidth = maxWidth;
+    let newHeight = newWidth / ratio;
+    
+    if (newHeight > maxHeight) {
+      newHeight = maxHeight;
+      newWidth = newHeight * ratio;
+    }
+    
+    canvas.style.width = `${newWidth}px`;
+    canvas.style.height = `${newHeight}px`;
+  };
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
   canvas.onmousemove = (e) => {
     if (gameState !== 'playing') {
       canvas.style.cursor = 'default';
       return;
     }
     const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-    const isOverBox = luckyBoxes.some(box => Math.hypot(mx - box.x, my - box.y) < 30);
+    const scaleX = CANVAS_WIDTH / rect.width;
+    const scaleY = CANVAS_HEIGHT / rect.height;
+    const mx = (e.clientX - rect.left) * scaleX;
+    const my = (e.clientY - rect.top) * scaleY;
+    const isOverBox = luckyBoxes.some(box => Math.hypot(mx - box.x, my - box.y) < 45);
     canvas.style.cursor = isOverBox ? 'pointer' : 'default';
   };
 
   canvas.onclick = (e) => {
     if (gameState !== 'playing') return;
     const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
+    const scaleX = CANVAS_WIDTH / rect.width;
+    const scaleY = CANVAS_HEIGHT / rect.height;
+    const mx = (e.clientX - rect.left) * scaleX;
+    const my = (e.clientY - rect.top) * scaleY;
 
     luckyBoxes = luckyBoxes.filter(box => {
       const dist = Math.hypot(mx - box.x, my - box.y);
-      if (dist < 30) {
+      if (dist < 45) {
         // Collect Lucky Box
         const rewards = [
           { name: 'Oltin', val: 500, type: 'money' },
           { name: 'Achko', val: 200, type: 'score' },
-          { name: 'Qalqon', val: 100, type: 'shield' }
+          { name: 'Qalqon', val: 100, type: 'shield' },
+          { name: 'Triple Shot', val: 600, type: 'triple' }
         ];
         const r = rewards[Math.floor(Math.random() * rewards.length)];
         const player = tanks.find(t => t.id === 'red-0');
@@ -281,6 +340,7 @@ function init() {
           if (r.type === 'money') player.money += r.val;
           if (r.type === 'score') playerScore += r.val;
           if (r.type === 'shield') player.shield = 100;
+          if (r.type === 'triple') player.tripleShotTimer = r.val;
           updateHUDs();
           
           // Visual feedback
@@ -299,8 +359,8 @@ function init() {
   startBtn.onclick = () => initGame(selectedMode);
   coopToggle.onclick = () => {
     isLocalCoop = !isLocalCoop;
-    coopToggle.className = `flex items-center gap-3 px-6 py-3 rounded-2xl border-2 transition-all font-bold uppercase ${
-      isLocalCoop ? 'bg-blue-500 border-white text-white' : 'bg-neutral-900 border-neutral-800 text-neutral-500'
+    coopToggle.className = `flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-2xl border transition-all font-bold uppercase ${
+      isLocalCoop ? 'bg-cyan-500 border-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.5)]' : 'bg-cyan-500/5 border-cyan-500/30 text-cyan-400'
     }`;
     p2Controls.classList.toggle('hidden', !isLocalCoop);
   };
@@ -317,9 +377,9 @@ function updateModeUI() {
   const btns = modeGrid.querySelectorAll('button');
   btns.forEach(btn => {
     if (btn.textContent === selectedMode) {
-      btn.className = `p-4 rounded-2xl border-2 transition-all font-black italic uppercase bg-emerald-500 border-white text-black scale-105 shadow-lg cursor-pointer`;
+      btn.className = `p-6 rounded-3xl border-2 transition-all font-black italic uppercase bg-cyan-500 border-cyan-400 text-black scale-105 shadow-[0_0_30px_rgba(6,182,212,0.5)] cursor-pointer`;
     } else {
-      btn.className = `p-4 rounded-2xl border-2 transition-all font-black italic uppercase bg-neutral-900 border-neutral-800 text-neutral-400 hover:border-neutral-600 cursor-pointer`;
+      btn.className = `p-6 rounded-3xl border border-cyan-500/20 transition-all font-black italic uppercase bg-black/40 text-cyan-500/50 hover:border-cyan-500/50 cursor-pointer`;
     }
   });
 }
@@ -334,15 +394,15 @@ function updateRewardsUI() {
     const canClaim = totalPlayTime >= reward.time && !isClaimed;
     
     const div = document.createElement('div');
-    div.className = `flex flex-col items-center p-2 rounded-xl border-2 transition-all ${
-      isClaimed ? 'bg-neutral-950 border-neutral-900 opacity-40' : 
-      canClaim ? 'bg-emerald-500/20 border-emerald-500 animate-pulse cursor-pointer' : 
-      'bg-neutral-900 border-neutral-800 opacity-60'
+    div.className = `flex flex-col items-center p-3 rounded-2xl border-2 transition-all ${
+      isClaimed ? 'bg-black/40 border-cyan-500/10 opacity-30' : 
+      canClaim ? 'bg-cyan-500/20 border-cyan-500 animate-pulse cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.3)]' : 
+      'bg-black/20 border-cyan-500/5 opacity-60'
     }`;
 
     div.innerHTML = `
-      <span class="text-[10px] font-black uppercase mb-1">${reward.label}</span>
-      <span class="text-xs font-mono ${canClaim ? 'text-emerald-400' : 'text-neutral-500'}">${isClaimed ? 'OLINDI' : `$${reward.amount}`}</span>
+      <span class="text-[8px] font-black uppercase mb-1 text-cyan-500/70">${reward.label}</span>
+      <span class="text-xs font-mono font-black ${canClaim ? 'text-cyan-400' : 'text-neutral-600'}">${isClaimed ? 'OLINDI' : `$${reward.amount}`}</span>
     `;
 
     if (canClaim) {
@@ -382,8 +442,8 @@ function updateRewardsUI() {
   // Update live timer if in game
   const liveTimer = document.getElementById('live-timer');
   if (liveTimer && gameState === 'playing') {
-    const mins = Math.floor(totalPlayTime / 60);
-    const secs = Math.floor(totalPlayTime % 60);
+    const mins = Math.floor(sessionTime / 60);
+    const secs = Math.floor(sessionTime % 60);
     liveTimer.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
   }
 }
@@ -392,7 +452,11 @@ function updateRewardsUI() {
 setInterval(() => {
   if (gameState === 'playing') {
     totalPlayTime++;
+    sessionTime++;
+    userTotalMoney++; // Give $1 every second
     updateRewardsUI();
+    const totalMoneyDisplay = document.getElementById('total-money-display');
+    if (totalMoneyDisplay) totalMoneyDisplay.textContent = `$${userTotalMoney}`;
     if (totalPlayTime % 10 === 0) saveUserState();
   }
   if (gameState === 'menu') {
@@ -404,9 +468,9 @@ function updateAtmosphereUI() {
   const btns = atmosphereGrid.querySelectorAll('button');
   btns.forEach(btn => {
     if (btn.textContent === selectedAtmosphere.name) {
-      btn.className = `px-4 py-2 rounded-xl border-2 transition-all font-bold uppercase text-xs bg-white border-white text-black scale-105 cursor-pointer`;
+      btn.className = `px-4 py-3 rounded-xl border-2 transition-all font-black uppercase text-[10px] bg-cyan-500 border-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.5)] scale-105 cursor-pointer`;
     } else {
-      btn.className = `px-4 py-2 rounded-xl border-2 transition-all font-bold uppercase text-xs bg-neutral-900 border-neutral-800 text-neutral-500 cursor-pointer`;
+      btn.className = `px-4 py-3 rounded-xl border border-cyan-500/20 transition-all font-bold uppercase text-[10px] bg-black/40 text-cyan-500/50 hover:border-cyan-500/50 cursor-pointer`;
     }
   });
 }
@@ -427,16 +491,16 @@ function updateTankUI() {
       <div class="flex flex-col items-center gap-1">
         <span class="text-xl ${model.id === 'golden' ? 'animate-bounce' : ''}">${model.icon}</span>
         <span class="text-[8px] font-black uppercase">${model.name}</span>
-        ${!isOwned ? `<span class="text-[8px] font-mono text-emerald-400">${model.id === 'golden' ? 'SOVG\'A' : `$${model.price}`}</span>` : ''}
+        ${!isOwned ? `<span class="text-[8px] font-mono text-purple-400">${model.id === 'golden' ? 'SOVG\'A' : `$${model.price}`}</span>` : ''}
       </div>
     `;
 
     if (isSelected) {
-      btn.className = `p-3 rounded-2xl border-2 transition-all bg-emerald-500 border-white text-black scale-110 shadow-lg cursor-pointer`;
+      btn.className = `p-3 rounded-2xl border-2 transition-all bg-purple-500 border-purple-400 text-black scale-110 shadow-[0_0_20px_rgba(168,85,247,0.5)] cursor-pointer`;
     } else if (isOwned) {
-      btn.className = `p-3 rounded-2xl border-2 transition-all bg-neutral-900 border-neutral-800 text-neutral-500 hover:border-neutral-600 cursor-pointer`;
+      btn.className = `p-3 rounded-2xl border border-purple-500/30 transition-all bg-black/40 text-purple-500/50 hover:border-purple-500/60 cursor-pointer`;
     } else {
-      btn.className = `p-3 rounded-2xl border-2 transition-all bg-neutral-900 border-neutral-800 text-neutral-700 opacity-80 cursor-pointer`;
+      btn.className = `p-3 rounded-2xl border border-purple-500/10 transition-all bg-black/40 text-purple-500/20 opacity-60 cursor-pointer grayscale`;
     }
 
     btn.onclick = () => {
@@ -491,6 +555,7 @@ function initGame(mode: GameMode) {
   luckyBoxes = [];
   winner = null;
   playerScore = 0;
+  sessionTime = 0;
 
   bgImg.src = selectedAtmosphere.bg;
 
@@ -505,9 +570,11 @@ function initGame(mode: GameMode) {
       x: 100, y: (CANVAS_HEIGHT / (redCount + 1)) * (i + 1),
       angle: 0, health: (model.hp + (level * 20)), maxHealth: (model.hp + (level * 20)),
       shield: 0, money: 200, level, damageMult: model.damage + (level * 0.1),
+      fireRateMult: 1,
       weapon: WeaponType.KALASH, inventory: [WeaponType.KALASH],
       lastShot: 0, color: isPlayer ? '#ef4444' : '#991b1b',
-      speed: model.speed, model: model.id
+      speed: model.speed, model: model.id,
+      treadOffset: 0, tripleShotTimer: 0
     });
   }
 
@@ -522,16 +589,24 @@ function initGame(mode: GameMode) {
       x: CANVAS_WIDTH - 100, y: (CANVAS_HEIGHT / (blueCount + 1)) * (i + 1),
       angle: Math.PI, health: (model.hp + (level * 20)), maxHealth: (model.hp + (level * 20)),
       shield: 0, money: 200, level, damageMult: model.damage + (level * 0.1),
+      fireRateMult: 1,
       weapon: WeaponType.KALASH, inventory: [WeaponType.KALASH],
       lastShot: 0, color: isPlayer ? '#3b82f6' : '#1e3a8a',
-      speed: model.speed, model: model.id
+      speed: model.speed, model: model.id,
+      treadOffset: 0, tripleShotTimer: 0
     });
   }
 
-  // Initial Obstacles
-  for (let i = 0; i < 8; i++) {
-    spawnObstacle();
+  // Initial Obstacles: 3 on left, 3 on right, 1 on top
+  // Large rocks for hiding
+  for (let i = 0; i < 3; i++) {
+    // Left side
+    obstacles.push({ id: Date.now() + i, x: 180, y: (CANVAS_HEIGHT / 4) * (i + 1), type: 'rock', value: 50 });
+    // Right side
+    obstacles.push({ id: Date.now() + i + 10, x: CANVAS_WIDTH - 180, y: (CANVAS_HEIGHT / 4) * (i + 1), type: 'rock', value: 50 });
   }
+  // Top center
+  obstacles.push({ id: Date.now() + 20, x: CANVAS_WIDTH / 2, y: 80, type: 'rock', value: 50 });
 
   currentModeEl.textContent = mode;
   setGameState('playing');
@@ -566,6 +641,19 @@ function update() {
   if (screenShake > 0) screenShake *= 0.9;
   else screenShake = 0;
 
+  // Money generation: $1 per second
+  if (Date.now() - lastMoneyTime > 1000) {
+    userTotalMoney += 1;
+    lastMoneyTime = Date.now();
+    saveUserState();
+    updateHUDs();
+  }
+
+  tanks.forEach(tank => {
+    if (tank.health <= 0) return;
+    if (tank.tripleShotTimer > 0) tank.tripleShotTimer--;
+  });
+
   // Lucky Box Spawning
   if (Math.random() < 0.002) {
     luckyBoxes.push({
@@ -589,20 +677,42 @@ function update() {
       const rotSpeed = 0.07;
 
       if (tank.id === 'red-0') {
-        if (keys['KeyA']) tank.angle -= rotSpeed;
-        if (keys['KeyD']) tank.angle += rotSpeed;
-        if (keys['KeyW']) { tank.x += Math.cos(tank.angle) * speed; tank.y += Math.sin(tank.angle) * speed; }
-        if (keys['KeyS']) { tank.x -= Math.cos(tank.angle) * speed; tank.y -= Math.sin(tank.angle) * speed; }
-        if (keys['Space'] && Date.now() - tank.lastShot > WEAPONS[tank.weapon].cooldown * 16) {
+        let moving = false;
+        if (keys['KeyA'] || mobileKeys['left']) { tank.angle -= rotSpeed; moving = true; }
+        if (keys['KeyD'] || mobileKeys['right']) { tank.angle += rotSpeed; moving = true; }
+        if (keys['KeyW'] || mobileKeys['up']) { 
+          tank.x += Math.cos(tank.angle) * speed; 
+          tank.y += Math.sin(tank.angle) * speed; 
+          moving = true; 
+        }
+        if (keys['KeyS'] || mobileKeys['down']) { 
+          tank.x -= Math.cos(tank.angle) * speed; 
+          tank.y -= Math.sin(tank.angle) * speed; 
+          moving = true; 
+        }
+        if (moving) tank.treadOffset = (tank.treadOffset + 2) % 10;
+
+        if ((keys['Space'] || mobileKeys['fire']) && Date.now() - tank.lastShot > (WEAPONS[tank.weapon].cooldown * 16) / tank.fireRateMult) {
           fireBullet(tank);
           tank.lastShot = Date.now();
         }
       } else if (tank.id === 'blue-0') {
-        if (keys['ArrowLeft']) tank.angle -= rotSpeed;
-        if (keys['ArrowRight']) tank.angle += rotSpeed;
-        if (keys['ArrowUp']) { tank.x += Math.cos(tank.angle) * speed; tank.y += Math.sin(tank.angle) * speed; }
-        if (keys['ArrowDown']) { tank.x -= Math.cos(tank.angle) * speed; tank.y -= Math.sin(tank.angle) * speed; }
-        if (keys['Enter'] && Date.now() - tank.lastShot > WEAPONS[tank.weapon].cooldown * 16) {
+        let moving = false;
+        if (keys['ArrowLeft']) { tank.angle -= rotSpeed; moving = true; }
+        if (keys['ArrowRight']) { tank.angle += rotSpeed; moving = true; }
+        if (keys['ArrowUp']) { 
+          tank.x += Math.cos(tank.angle) * speed; 
+          tank.y += Math.sin(tank.angle) * speed; 
+          moving = true; 
+        }
+        if (keys['ArrowDown']) { 
+          tank.x -= Math.cos(tank.angle) * speed; 
+          tank.y -= Math.sin(tank.angle) * speed; 
+          moving = true; 
+        }
+        if (moving) tank.treadOffset = (tank.treadOffset + 2) % 10;
+
+        if (keys['Enter'] && Date.now() - tank.lastShot > (WEAPONS[tank.weapon].cooldown * 16) / tank.fireRateMult) {
           fireBullet(tank);
           tank.lastShot = Date.now();
         }
@@ -622,8 +732,9 @@ function update() {
         if (dist > 180) {
           tank.x += Math.cos(tank.angle) * (tank.speed * 0.5);
           tank.y += Math.sin(tank.angle) * (tank.speed * 0.5);
+          tank.treadOffset = (tank.treadOffset + 1) % 10;
         }
-        if (Math.abs(angleDiff) < 0.3 && Date.now() - tank.lastShot > WEAPONS[tank.weapon].cooldown * 24) {
+        if (Math.abs(angleDiff) < 0.3 && Date.now() - tank.lastShot > (WEAPONS[tank.weapon].cooldown * 24) / tank.fireRateMult) {
           fireBullet(tank);
           tank.lastShot = Date.now();
         }
@@ -755,20 +866,37 @@ function update() {
 
 function fireBullet(tank: Tank) {
   const weapon = WEAPONS[tank.weapon];
-  bullets.push({
-    x: tank.x + Math.cos(tank.angle) * (TANK_SIZE / 2 + 5),
-    y: tank.y + Math.sin(tank.angle) * (TANK_SIZE / 2 + 5),
-    vx: Math.cos(tank.angle) * weapon.speed,
-    vy: Math.sin(tank.angle) * weapon.speed,
-    ownerId: tank.id,
-    ownerTeam: tank.team,
-    damage: weapon.damage * tank.damageMult,
-    life: weapon.type === WeaponType.KNIFE ? 10 : 200,
+  const angles = tank.tripleShotTimer > 0 ? [-0.2, 0, 0.2] : [0];
+  
+  angles.forEach(offset => {
+    bullets.push({
+      x: tank.x + Math.cos(tank.angle + offset) * (TANK_SIZE / 2 + 15),
+      y: tank.y + Math.sin(tank.angle + offset) * (TANK_SIZE / 2 + 15),
+      vx: Math.cos(tank.angle + offset) * weapon.speed,
+      vy: Math.sin(tank.angle + offset) * weapon.speed,
+      ownerId: tank.id,
+      ownerTeam: tank.team,
+      damage: weapon.damage * tank.damageMult,
+      life: weapon.type === WeaponType.KNIFE ? 10 : 200,
+    });
   });
 }
 
 function draw() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+  // Draw Background with Neon Grid
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  
+  ctx.strokeStyle = 'rgba(6, 182, 212, 0.1)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < CANVAS_WIDTH; x += 40) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, CANVAS_HEIGHT); ctx.stroke();
+  }
+  for (let y = 0; y < CANVAS_HEIGHT; y += 40) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(CANVAS_WIDTH, y); ctx.stroke();
+  }
 
   ctx.save();
   if (screenShake > 1) {
@@ -777,39 +905,48 @@ function draw() {
     ctx.translate(sx, sy);
   }
 
-  // Background Image
-  if (bgImg.complete) {
-    ctx.drawImage(bgImg, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    ctx.fillStyle = 'rgba(0,0,0,0.3)';
-    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  }
-
-  // Grid
-  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-  ctx.lineWidth = 1;
-  for (let i = 0; i < CANVAS_WIDTH; i += 50) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, CANVAS_HEIGHT); ctx.stroke(); }
-  for (let i = 0; i < CANVAS_HEIGHT; i += 50) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(CANVAS_WIDTH, i); ctx.stroke(); }
-
+  // Apply global glow
+  ctx.shadowBlur = 10;
+  
   // Obstacles
   obstacles.forEach(obj => {
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 3;
     if (obj.type === 'rock') {
-      ctx.fillStyle = '#4b5563';
-      ctx.beginPath(); ctx.arc(obj.x, obj.y, 20, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#374151';
-      ctx.beginPath(); ctx.arc(obj.x - 5, obj.y - 5, 10, 0, Math.PI * 2); ctx.fill();
+      const size = 60; // Even larger rocks for hiding
+      ctx.shadowColor = '#06b6d4';
+      ctx.fillStyle = 'rgba(6, 182, 212, 0.2)';
+      ctx.beginPath(); ctx.arc(obj.x, obj.y, size, 0, Math.PI * 2); ctx.fill(); 
+      ctx.strokeStyle = '#06b6d4';
+      ctx.lineWidth = 2;
+      ctx.stroke();
     } else if (obj.type === 'mine') {
-      ctx.fillStyle = '#ef4444';
-      ctx.beginPath(); ctx.arc(obj.x, obj.y, 10, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(obj.x, obj.y, 12, 0, Math.PI * 2); ctx.stroke();
+      ctx.shadowColor = '#ef4444';
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.3)';
+      ctx.beginPath(); ctx.arc(obj.x, obj.y, 12, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2;
+      ctx.stroke();
     } else if (obj.type === 'health') {
-      ctx.fillStyle = '#22c55e'; ctx.fillRect(obj.x - 10, obj.y - 10, 20, 20);
+      ctx.shadowColor = '#22c55e';
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.3)';
+      ctx.fillRect(obj.x - 12, obj.y - 12, 24, 24);
+      ctx.strokeStyle = '#22c55e';
+      ctx.strokeRect(obj.x - 12, obj.y - 12, 24, 24);
       ctx.fillStyle = '#fff'; ctx.fillRect(obj.x - 2, obj.y - 8, 4, 16); ctx.fillRect(obj.x - 8, obj.y - 2, 16, 4);
     } else if (obj.type === 'shield') {
-      ctx.fillStyle = '#06b6d4'; ctx.beginPath(); ctx.arc(obj.x, obj.y, 12, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(obj.x, obj.y, 15, 0, Math.PI * 2); ctx.stroke();
+      ctx.shadowColor = '#06b6d4';
+      ctx.fillStyle = 'rgba(6, 182, 212, 0.3)';
+      ctx.beginPath(); ctx.arc(obj.x, obj.y, 14, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#06b6d4';
+      ctx.stroke();
     } else if (obj.type === 'gold') {
-      ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(obj.x, obj.y, 12, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#d97706'; ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('$', obj.x, obj.y + 4);
+      ctx.shadowColor = '#fbbf24';
+      ctx.fillStyle = 'rgba(251, 191, 36, 0.3)';
+      ctx.beginPath(); ctx.arc(obj.x, obj.y, 14, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#fbbf24';
+      ctx.stroke();
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('$', obj.x, obj.y + 5);
     }
   });
 
@@ -820,21 +957,25 @@ function draw() {
     ctx.translate(tank.x, tank.y);
     ctx.rotate(tank.angle);
     
-    // Treads
-    ctx.fillStyle = '#111';
-    ctx.fillRect(-TANK_SIZE / 2, -TANK_SIZE / 2, TANK_SIZE, 8);
-    ctx.fillRect(-TANK_SIZE / 2, TANK_SIZE / 2 - 8, TANK_SIZE, 8);
+    ctx.shadowColor = tank.color;
+    ctx.shadowBlur = 15;
     
-    // Body
-    ctx.fillStyle = tank.color;
+    // Treads (Neon)
+    ctx.strokeStyle = tank.color;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-TANK_SIZE / 2, -TANK_SIZE / 2, TANK_SIZE, 8);
+    ctx.strokeRect(-TANK_SIZE / 2, TANK_SIZE / 2 - 8, TANK_SIZE, 8);
+    
+    // Body (Neon)
+    ctx.fillStyle = 'rgba(0,0,0,0.8)';
     ctx.fillRect(-TANK_SIZE / 2 + 4, -TANK_SIZE / 2 + 4, TANK_SIZE - 8, TANK_SIZE - 8);
+    ctx.strokeStyle = tank.color;
+    ctx.strokeRect(-TANK_SIZE / 2 + 4, -TANK_SIZE / 2 + 4, TANK_SIZE - 8, TANK_SIZE - 8);
     
-    // Turret
-    ctx.fillStyle = '#111';
-    ctx.fillRect(0, -4, TANK_SIZE / 2 + 12, 8); // Barrel
-    ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fill(); // Turret base
-    ctx.fillStyle = tank.color;
-    ctx.beginPath(); ctx.arc(0, 0, 8, 0, Math.PI * 2); ctx.fill(); // Turret top
+    // Turret (Neon)
+    ctx.strokeStyle = tank.color;
+    ctx.strokeRect(0, -3, TANK_SIZE / 2 + 12, 6); // Barrel
+    ctx.beginPath(); ctx.arc(0, 0, 10, 0, Math.PI * 2); ctx.fillStyle = 'rgba(0,0,0,0.9)'; ctx.fill(); ctx.stroke();
     
     ctx.restore();
 
@@ -858,9 +999,22 @@ function draw() {
 
   // Bullets
   bullets.forEach(b => {
-    ctx.fillStyle = b.ownerTeam === 'red' ? '#f87171' : '#60a5fa';
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = b.ownerTeam === 'red' ? '#ff0000' : '#00f2ff';
+    ctx.fillStyle = b.ownerTeam === 'red' ? '#ff0000' : '#00f2ff';
+    ctx.beginPath(); ctx.arc(b.x, b.y, BULLET_SIZE + 2, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff';
     ctx.beginPath(); ctx.arc(b.x, b.y, BULLET_SIZE, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke();
+    
+    // Trail effect
+    ctx.globalAlpha = 0.3;
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(b.x - b.vx * 2, b.y - b.vy * 2);
+    ctx.lineWidth = BULLET_SIZE * 2;
+    ctx.strokeStyle = b.ownerTeam === 'red' ? '#ff0000' : '#00f2ff';
+    ctx.stroke();
+    ctx.globalAlpha = 1.0;
   });
 
   // Lucky Boxes
@@ -868,10 +1022,12 @@ function draw() {
     ctx.save();
     ctx.translate(box.x, box.y);
     ctx.rotate(Math.sin(Date.now() / 200) * 0.2);
-    ctx.fillStyle = '#f59e0b';
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#f59e0b';
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 3;
+    ctx.fillStyle = 'rgba(0,0,0,0.8)';
     ctx.fillRect(-15, -15, 30, 30);
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 2;
     ctx.strokeRect(-15, -15, 30, 30);
     ctx.fillStyle = '#fff';
     ctx.font = 'bold 20px Arial';
@@ -895,28 +1051,28 @@ function updateHUDs() {
   tanks.filter(t => !t.isBot).forEach(tank => {
     const hud = tank.team === 'red' ? hudRed : hudBlue;
     const container = document.createElement('div');
-    container.className = `bg-black/60 backdrop-blur-xl p-4 rounded-3xl border border-white/10 shadow-2xl ${tank.team === 'blue' ? 'text-right' : ''}`;
+    container.className = `bg-black/80 backdrop-blur-xl p-4 rounded-[2rem] border border-cyan-500/20 shadow-[0_0_30px_rgba(6,182,212,0.1)] ${tank.team === 'blue' ? 'text-right' : ''}`;
     
     const info = document.createElement('div');
-    info.className = `flex items-center gap-3 mb-3 ${tank.team === 'blue' ? 'justify-end' : ''}`;
+    info.className = `flex items-center gap-3 mb-4 ${tank.team === 'blue' ? 'justify-end' : ''}`;
     info.innerHTML = tank.team === 'red' ? 
-      `<div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-xl">👤</div>
+      `<div class="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(239,68,68,0.5)]">👤</div>
        <div class="flex flex-col">
-         <span class="text-[10px] uppercase text-neutral-500 font-black">Pul</span>
-         <span class="font-mono font-black text-yellow-500 text-xl leading-none">$${tank.money}</span>
+         <span class="text-[10px] uppercase text-red-500/70 font-black">Kiber Balans</span>
+         <span class="font-mono font-black text-white text-2xl leading-none">$${tank.money}</span>
        </div>` : 
       `<div class="flex flex-col">
-         <span class="text-[10px] uppercase text-neutral-500 font-black">Pul</span>
-         <span class="font-mono font-black text-yellow-500 text-xl leading-none">$${tank.money}</span>
+         <span class="text-[10px] uppercase text-blue-500/70 font-black">Kiber Balans</span>
+         <span class="font-mono font-black text-white text-2xl leading-none">$${tank.money}</span>
        </div>
-       <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-xl">👤</div>`;
+       <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(59,130,246,0.5)]">👤</div>`;
     
     const weapons = document.createElement('div');
     weapons.className = `flex gap-2 ${tank.team === 'blue' ? 'justify-end' : ''}`;
     
     const shopBtn = document.createElement('button');
     shopBtn.innerHTML = '<span class="text-xs">🛒 DO\'KON</span>';
-    shopBtn.className = `px-4 h-10 flex items-center justify-center gap-2 ${tank.team === 'red' ? 'bg-emerald-500 text-black' : 'bg-emerald-500 text-black'} rounded-xl hover:scale-110 transition-transform font-black shadow-lg cursor-pointer`;
+    shopBtn.className = `px-6 h-12 flex items-center justify-center gap-2 bg-cyan-500 text-black rounded-2xl hover:scale-110 transition-transform font-black shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer`;
     shopBtn.onclick = () => openShop(tank.team);
     
     if (tank.team === 'red') weapons.appendChild(shopBtn);
@@ -924,7 +1080,7 @@ function updateHUDs() {
     tank.inventory.forEach(wType => {
       const btn = document.createElement('button');
       btn.textContent = WEAPONS[wType].icon;
-      btn.className = `w-10 h-10 flex items-center justify-center rounded-xl transition-all cursor-pointer ${tank.weapon === wType ? 'bg-white text-black scale-110 shadow-lg' : 'bg-neutral-800 text-white hover:bg-neutral-700'}`;
+      btn.className = `w-12 h-12 flex items-center justify-center rounded-2xl transition-all cursor-pointer ${tank.weapon === wType ? 'bg-white text-black scale-110 shadow-xl' : 'bg-black/40 border border-white/10 text-white hover:bg-white/10'}`;
       btn.onclick = () => { tank.weapon = wType; updateHUDs(); };
       weapons.appendChild(btn);
     });
@@ -956,28 +1112,28 @@ function openShop(team: 'red' | 'blue') {
     shopItems.appendChild(title);
 
     const grid = document.createElement('div');
-    grid.className = 'grid grid-cols-2 gap-2';
+    grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-2';
     
     section.items.forEach((item: any) => {
       const btn = document.createElement('button');
       const canAfford = tank.money >= item.price;
       const isOwnedWeapon = section.type === 'weapon' && tank.inventory.includes(item.type);
 
-      btn.className = `flex flex-col p-3 rounded-2xl border-2 transition-all text-left relative overflow-hidden group ${
-        canAfford ? 'bg-neutral-800 border-neutral-700 hover:border-emerald-500 hover:scale-[1.02] cursor-pointer' : 'bg-neutral-900 border-neutral-800 opacity-50 cursor-not-allowed'
+      btn.className = `flex flex-col p-4 rounded-2xl border-2 transition-all text-left relative overflow-hidden group ${
+        canAfford ? 'bg-black border-cyan-500/20 hover:border-cyan-500 hover:scale-[1.02] cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.1)]' : 'bg-black/40 border-cyan-500/5 opacity-50 cursor-not-allowed'
       }`;
       
       btn.innerHTML = `
-        <div class="flex items-center gap-3 mb-1">
-          <span class="text-xl group-hover:scale-125 transition-transform">${item.icon}</span>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-2xl group-hover:scale-125 transition-transform drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">${item.icon}</span>
           <div>
-            <p class="font-black uppercase italic text-[10px] leading-tight">${item.name}</p>
-            <p class="text-[8px] text-neutral-500">${section.type === 'weapon' ? `Zarar: ${item.damage}` : item.desc}</p>
+            <p class="font-black uppercase italic text-[10px] leading-tight text-white">${item.name}</p>
+            <p class="text-[8px] text-cyan-500/50">${section.type === 'weapon' ? `Zarar: ${item.damage}` : item.desc}</p>
           </div>
         </div>
         <div class="flex justify-between items-center mt-auto">
-          <span class="font-mono font-black text-emerald-400 text-xs">$${item.price}</span>
-          ${isOwnedWeapon ? '<span class="text-[8px] font-black text-neutral-500 uppercase">Bor</span>' : ''}
+          <span class="font-mono font-black text-cyan-400 text-xs">$${item.price}</span>
+          ${isOwnedWeapon ? '<span class="text-[8px] font-black text-cyan-500/50 uppercase tracking-widest">BOR</span>' : ''}
         </div>
       `;
 
@@ -993,6 +1149,11 @@ function openShop(team: 'red' | 'blue') {
             if (item.type === UpgradeType.SHIELD) tank.shield = 100;
             if (item.type === UpgradeType.SPEED) tank.speed *= 1.1;
             if (item.type === UpgradeType.DAMAGE) tank.damageMult *= 1.1;
+            if (item.type === UpgradeType.ARMOR) {
+              tank.maxHealth += 20;
+              tank.health += 20;
+            }
+            if (item.type === UpgradeType.FIRE_RATE) tank.fireRateMult *= 1.15;
           }
           updateHUDs();
           openShop(team); // Refresh shop to update affordance
